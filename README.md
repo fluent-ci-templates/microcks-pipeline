@@ -89,7 +89,7 @@ You can also use this pipeline programmatically:
 ```ts
 import { importApiSpecs, runTests } from "https://pkg.fluentci.io/microcks_pipeline@v0.1.0/mod.ts";
 
-await importApiSpec(
+await importApiSpecs(
     ".",
     Deno.env.get("SPECIFICATION_FILES")!,
     Deno.env.get("MICROCKS_URL")!,
