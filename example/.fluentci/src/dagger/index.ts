@@ -1,4 +1,4 @@
 import pipeline from "./pipeline.ts";
-import { hello, jobDescriptions } from "./jobs.ts";
+import { importApiSpecs, runTests, jobDescriptions } from "./jobs.ts";
 
-export { pipeline, hello, jobDescriptions };
+export { importApiSpecs, runTests, pipeline, jobDescriptions };

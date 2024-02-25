@@ -1,0 +1,24 @@
+name: Example
+on:
+  push:
+    branches:
+      - main
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Fluent CI
+        uses: fluentci-io/setup-fluentci@v4
+      - name: Run Dagger Pipelines
+        run: dagger run deno run -A ../src/dagger/runner.ts import-api-specs
+        working-directory: example
+        env:
+          SPECIFICATION_FILES: /app/samples/PetstoreAPI-swagger.json
+          MICROCKS_URL: http://microcks:8080/api
+          KEYCLOAK_CLIENT_ID: microcks-serviceaccount
+          KEYCLOAK_CLIENT_SECRET: ab54d329-e435-41ae-a900-ec6b3fe15c54
+          API_NAME_AND_VERSION: ""
+          TEST_ENDPOINT: ""
+          RUNNER: "HTTP"
+          WAIT_FOR: "5sec"

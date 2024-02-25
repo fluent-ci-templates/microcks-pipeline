@@ -5,7 +5,11 @@
 
 import { Directory, dag } from "../../deps.ts";
 import { Secret } from "../../sdk/client.gen.ts";
-import { getDirectory, getKeycloakClientSecret } from "./lib.ts";
+import {
+  getDirectory,
+  getKeycloakClientSecret,
+  microcksService,
+} from "./lib.ts";
 
 export enum Job {
   importApiSpecs = "import-api-specs",
@@ -33,7 +37,7 @@ export async function importApiSpecs(
 ): Promise<string> {
   const secret = await getKeycloakClientSecret(dag, keycloakClientSecret);
   const context = await getDirectory(dag, src);
-  const ctr = dag
+  let ctr = dag
     .pipeline(Job.importApiSpecs)
     .container()
     .from("quay.io/microcks/microcks-cli:0.5.3")
@@ -42,17 +46,27 @@ export async function importApiSpecs(
     .withEnvVariable("SPECIFICATION_FILES", specificationFiles)
     .withEnvVariable("MICROCKS_URL", microcksURL)
     .withEnvVariable("KEYCLOAK_CLIENT_ID", keycloakClientId)
-    .withSecretVariable("KEYCLOAK_CLIENT_SECRET", secret)
-    .withExec([
-      "bash",
-      "-c",
-      `\
-    microcks-cli import "$SPECIFICATION_FILES" \
-      --microcksURL=$MICROCKS_URL \
-      --keycloakClientId=$KEYCKLOAK_CLIENT_ID --keycloakClientSecret=$KEYCLOAK_CLIENT_SECRET \
-      --insecure
-    `,
-    ]);
+    .withSecretVariable("KEYCLOAK_CLIENT_SECRET", secret);
+
+  if (microcksURL === "http://microcks:8080/api") {
+    const { microcks, keycloak } = microcksService(dag);
+    ctr = await ctr
+      .withServiceBinding("microcks", microcks)
+      .withServiceBinding("keycloak", keycloak)
+      .sync();
+  }
+
+  ctr = ctr.withExec([
+    "bash",
+    "-c",
+    `\
+  microcks-cli import "$SPECIFICATION_FILES" \
+    --microcksURL=$MICROCKS_URL \
+    --keycloakClientId=$KEYCLOAK_CLIENT_ID --keycloakClientSecret=$KEYCLOAK_CLIENT_SECRET \
+    --insecure \
+    --verbose
+  `,
+  ]);
 
   const result = await ctr.stdout();
   return result;
@@ -86,7 +100,7 @@ export async function runTests(
   operationsHeaders?: string
 ): Promise<string> {
   const secret = await getKeycloakClientSecret(dag, keycloakClientSecret);
-  const ctr = dag
+  let ctr = dag
     .pipeline(Job.runTests)
     .container()
     .from("quay.io/microcks/microcks-cli:0.5.3")
@@ -100,17 +114,26 @@ export async function runTests(
     .withEnvVariable("WAIT_FOR", waitFor)
     .withEnvVariable("SECRET_NAME", secretName || "")
     .withEnvVariable("FILTER_OPERATIONS", filterOperations || "")
-    .withEnvVariable("OPERATIONS_HEADERS", operationsHeaders || "")
-    .withExec([
-      "bash",
-      "-c",
-      `\
-      microcks-cli test "$API_NAME_AND_VERSION" $TEST_ENDPOINT $RUNNER \
-        --microcksURL=$MICROCKS_URL --waitFor=$WAIT_FOR --secretName="$SECRET_NAME" \
-        --keycloakClientId=$KEYCLOAK_CIENT_ID --keycloakClientSecret=$KEYCLOAK_CLIENT_SECRET \
-        --insecure --filteredOperations="$FILTER_OPERATIONS" --operationsHeaders="$OPERATIONS_HEADERS" \ 
-    `,
-    ]);
+    .withEnvVariable("OPERATIONS_HEADERS", operationsHeaders || "");
+
+  if (microcksURL === "http://microcks:8080/api") {
+    const { microcks, keycloak } = microcksService(dag);
+    ctr = await ctr
+      .withServiceBinding("microcks", microcks)
+      .withServiceBinding("keycloak", keycloak)
+      .sync();
+  }
+
+  ctr = ctr.withExec([
+    "bash",
+    "-c",
+    `\
+    microcks-cli test "$API_NAME_AND_VERSION" $TEST_ENDPOINT $RUNNER \
+      --microcksURL=$MICROCKS_URL --waitFor=$WAIT_FOR --secretName="$SECRET_NAME" \
+      --keycloakClientId=$KEYCLOAK_CIENT_ID --keycloakClientSecret=$KEYCLOAK_CLIENT_SECRET \
+      --insecure --filteredOperations="$FILTER_OPERATIONS" --operationsHeaders="$OPERATIONS_HEADERS" \ 
+  `,
+  ]);
 
   const result = await ctr.stdout();
   return result;

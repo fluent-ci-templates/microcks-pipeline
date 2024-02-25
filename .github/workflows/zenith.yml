@@ -19,4 +19,18 @@ jobs:
       - name: Run Dagger Pipelines
         run: |
           dagger functions
+          dagger call import-api-specs --src . \
+          --specification-files $SPECIFICATION_FILES \
+          --microcks-url $MICROCKS_URL \
+          --keycloak-client-id $KEYCLOAK_CLIENT_ID \
+          --keycloak-client-secret KEYCLOAK_CLIENT_SECRET
         working-directory: example
+        env:
+          SPECIFICATION_FILES: /app/samples/PetstoreAPI-swagger.json:true
+          MICROCKS_URL: http://microcks:8080/api
+          KEYCLOAK_CLIENT_ID: microcks-serviceaccount
+          KEYCLOAK_CLIENT_SECRET: ab54d329-e435-41ae-a900-ec6b3fe15c54
+          API_NAME_AND_VERSION: ""
+          TEST_ENDPOINT: ""
+          RUNNER: "HTTP"
+          WAIT_FOR: "5sec"
