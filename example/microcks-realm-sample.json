@@ -5,35 +5,20 @@
   "enabled": true,
   "sslRequired": "none",
   "registrationAllowed": false,
-  "users": [
+  "users" : [
     {
-      "username": "admin",
+      "username" : "admin",
       "enabled": true,
-      "credentials": [
-        {
-          "type": "password",
-          "value": "microcks123"
-        }
+      "credentials" : [
+        { "type" : "password",
+          "value" : "microcks123" }
       ],
       "realmRoles": [],
       "applicationRoles": {
-        "realm-management": [
-          "manage-users",
-          "manage-clients"
-        ],
-        "account": [
-          "manage-account"
-        ],
-        "microcks-app": [
-          "user",
-          "manager",
-          "admin"
-        ],
-        "microcks-serviceaccount": [
-          "user",
-          "manager",
-          "admin"
-        ]
+        "realm-management": [ "manage-users", "manage-clients" ],
+        "account": [ "manage-account" ],
+        "microcks-app": [ "user", "manager", "admin"],
+        "microcks-serviceaccount": [ "user", "manager", "admin"]
       }
     }
   ],
@@ -102,22 +87,10 @@
     }
   ],
   "defaultRoles": [],
-  "requiredCredentials": [
-    "password"
-  ],
+  "requiredCredentials": [ "password" ],
   "scopeMappings": [],
   "clientScopeMappings": {
     "microcks-app": [
-      {
-        "client": "microcks-app-js",
-        "roles": [
-          "manager",
-          "admin",
-          "user"
-        ]
-      }
-    ],
-    "microcks-serviceaccount": [
       {
         "client": "microcks-app-js",
         "roles": [
@@ -172,7 +145,7 @@
       "enabled": true,
       "bearerOnly": true,
       "defaultRoles": [
-        "user"
+        "manager"
       ]
     },
     {
@@ -185,9 +158,7 @@
       "directAccessGrantsEnabled": true,
       "serviceAccountsEnabled": true,
       "clientAuthenticatorType": "client-secret",
-      "defaultRoles": [
-        "manager"
-      ]
+      "defaultRoles": ["manager"]
     }
   ],
   "keycloakVersion": "10.0.1"

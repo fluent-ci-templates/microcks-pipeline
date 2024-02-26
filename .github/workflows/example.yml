@@ -14,7 +14,7 @@ jobs:
         run: dagger run deno run -A ../src/dagger/runner.ts import-api-specs
         working-directory: example
         env:
-          SPECIFICATION_FILES: /app/samples/PetstoreAPI-swagger.json:true
+          SPECIFICATION_FILES: /app/samples/APIPastry-openapi.yaml:true
           MICROCKS_URL: http://microcks:8080/api
           KEYCLOAK_CLIENT_ID: microcks-serviceaccount
           KEYCLOAK_CLIENT_SECRET: ab54d329-e435-41ae-a900-ec6b3fe15c54
