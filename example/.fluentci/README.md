@@ -48,7 +48,7 @@ dagger install github.com/fluent-ci-templates/microcks-pipeline@mod
 | RUNNER | The runner to use | `HTTP` |
 | WAIT_FOR | The time to wait for the test to finish | `5sec` |
 | SECRET_NAME | The name of the secret to use |  |
-| FILTER_OPERATIONS | The operations to filter |  |
+| FILTERED_OPERATIONS | The operations to filter |  |
 
 
 
@@ -77,7 +77,7 @@ runTests(
   runner = "HTTP",
   waitFor = "5sec",
   secretName?: string,
-  filterOperations?: string,
+  filteredOperations?: string,
   operationsHeaders?: string
 ): Promise<string>;
 ```
@@ -106,6 +106,6 @@ await runTests(
     Deno.env.get("RUNNER")!,
     Deno.env.get("WAIT_FOR"),
     Deno.env.get("SECRET_NAME"),
-    Deno.env.get("FILTER_OPERATIONS")
+    Deno.env.get("FILTERED_OPERATIONS")
 );
 ```
