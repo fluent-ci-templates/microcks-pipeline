@@ -83,7 +83,7 @@ export async function importApiSpecs(
  * @param secretName {secretName: string}
  * @param keycloakClientId {keycloakClientId: string}
  * @param keycloakClientSecret {keycloakClientSecret: string | Secret}
- * @param filterOperations {filterOperations: string}
+ * @param filteredOperations {filteredOperations: string}
  * @param operationsHeaders {operationsHeaders: string}
  * @returns {string}
  */
@@ -96,7 +96,7 @@ export async function runTests(
   runner = "HTTP",
   waitFor = "5sec",
   secretName?: string,
-  filterOperations?: string,
+  filteredOperations?: string,
   operationsHeaders?: string
 ): Promise<string> {
   const secret = await getKeycloakClientSecret(dag, keycloakClientSecret);
@@ -113,7 +113,7 @@ export async function runTests(
     .withEnvVariable("RUNNER", runner)
     .withEnvVariable("WAIT_FOR", waitFor)
     .withEnvVariable("SECRET_NAME", secretName || "")
-    .withEnvVariable("FILTER_OPERATIONS", filterOperations || "")
+    .withEnvVariable("FILTERED_OPERATIONS", filteredOperations || "")
     .withEnvVariable("OPERATIONS_HEADERS", operationsHeaders || "");
 
   if (microcksURL === "http://microcks:8080/api") {
@@ -131,7 +131,7 @@ export async function runTests(
     microcks-cli test "$API_NAME_AND_VERSION" $TEST_ENDPOINT $RUNNER \
       --microcksURL=$MICROCKS_URL --waitFor=$WAIT_FOR --secretName="$SECRET_NAME" \
       --keycloakClientId=$KEYCLOAK_CLIENT_ID --keycloakClientSecret=$KEYCLOAK_CLIENT_SECRET \
-      --insecure --filteredOperations="$FILTER_OPERATIONS" --operationsHeaders="$OPERATIONS_HEADERS" \ 
+      --insecure --filteredOperations="$FILTERED_OPERATIONS" --operationsHeaders="$OPERATIONS_HEADERS" \ 
   `,
   ]);
 
@@ -156,7 +156,7 @@ export type JobExec =
       runner?: string,
       waitFor?: string,
       secretName?: string,
-      filterOperations?: string,
+      filteredOperations?: string,
       operationsHeaders?: string
     ) => Promise<string>);
 

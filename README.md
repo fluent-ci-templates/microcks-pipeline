@@ -40,15 +40,15 @@ dagger install github.com/fluent-ci-templates/microcks-pipeline@mod
 | Variable          | Description               | Default    |
 | ----------------- | ------------------------- | ---------- |
 | SPECIFICATION_FILES | The path to the API specifications |  |
-| MICROCKS_URL | The URL of the Microcks instance |  |
-| KEYCLOAK_CLIENT_ID | The Keycloak client ID |  |
-| KEYCLOAK_CLIENT_SECRET | The Keycloak client secret |  |
+| MICROCKS_URL | Microcks instance API endpoint |  |
+| KEYCLOAK_CLIENT_ID | Keycloak Realm Service Account ClientId |  |
+| KEYCLOAK_CLIENT_SECRET | Keycloak Realm Service Account ClientSecret |  |
 | API_NAME_AND_VERSION | The name and version of the API to test |  |
 | TEST_ENDPOINT | The endpoint to test |  |
-| RUNNER | The runner to use | `HTTP` |
-| WAIT_FOR | The time to wait for the test to finish | `5sec` |
-| SECRET_NAME | The name of the secret to use |  |
-| FILTER_OPERATIONS | The operations to filter |  |
+| RUNNER | Test strategy (one of: HTTP, SOAP, SOAP_UI, POSTMAN, OPEN_API_SCHEMA, ASYNC_API_SCHEMA, GRPC_PROTOBUF, GRAPHQL_SCHEMA) | `HTTP` |
+| WAIT_FOR | Time to wait for test to finish (int + one of: milli, sec, min) | `5sec` |
+| SECRET_NAME | The name of a Secret to use for connecting test endpoint |  |
+| FILTERED_OPERATIONS | JSON that allows to filter a list of operations to launch a test for |  |
 
 
 
@@ -77,7 +77,7 @@ runTests(
   runner = "HTTP",
   waitFor = "5sec",
   secretName?: string,
-  filterOperations?: string,
+  filteredOperations?: string,
   operationsHeaders?: string
 ): Promise<string>;
 ```
@@ -106,6 +106,6 @@ await runTests(
     Deno.env.get("RUNNER")!,
     Deno.env.get("WAIT_FOR"),
     Deno.env.get("SECRET_NAME"),
-    Deno.env.get("FILTER_OPERATIONS")
+    Deno.env.get("FILTERED_OPERATIONS")
 );
 ```

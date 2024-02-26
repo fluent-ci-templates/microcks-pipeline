@@ -20,5 +20,5 @@ await runTests(
   Deno.env.get("RUNNER")!,
   Deno.env.get("WAIT_FOR"),
   Deno.env.get("SECRET_NAME"),
-  Deno.env.get("FILTER_OPERATIONS")
+  Deno.env.get("FILTERED_OPERATIONS")
 );
