@@ -1,5 +1,5 @@
 {
-  "name": "microcks-pipeline",
+  "name": "microcks",
   "sdk": "github.com/fluentci-io/daggerverse/deno-sdk@main",
   "version": "v0.1.0",
   "description": "Import API specs or run Microcks tests",
