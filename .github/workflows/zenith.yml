@@ -24,13 +24,20 @@ jobs:
           --microcks-url $MICROCKS_URL \
           --keycloak-client-id $KEYCLOAK_CLIENT_ID \
           --keycloak-client-secret KEYCLOAK_CLIENT_SECRET
+          dagger call run-tests --api-name-and-version $API_NAME_AND_VERSION \
+          --test-endpoint $TEST_ENDPOINT \
+          --runner $RUNNER \
+          --microcks-url $MICROCKS_URL \
+          --keycloak-client-id $KEYCLOAK_CLIENT_ID \
+          --keycloak-client-secret KEYCLOAK_CLIENT_SECRET
+
         working-directory: example
         env:
-          SPECIFICATION_FILES: /app/samples/APIPastry-openapi.yaml:true
+          SPECIFICATION_FILES: /app/samples/BeerCatalogAPI-collection.json
           MICROCKS_URL: http://microcks:8080/api
           KEYCLOAK_CLIENT_ID: microcks-serviceaccount
           KEYCLOAK_CLIENT_SECRET: ab54d329-e435-41ae-a900-ec6b3fe15c54
-          API_NAME_AND_VERSION: ""
-          TEST_ENDPOINT: ""
-          RUNNER: "HTTP"
-          WAIT_FOR: "5sec"
+          API_NAME_AND_VERSION: "Beer Catalog API:0.99"
+          TEST_ENDPOINT: "http://microcks:8080/rest/Beer+Catalog+API/0.99/"
+          RUNNER: "POSTMAN"
+          WAIT_FOR: "3sec"

@@ -130,7 +130,7 @@ export async function runTests(
     `\
     microcks-cli test "$API_NAME_AND_VERSION" $TEST_ENDPOINT $RUNNER \
       --microcksURL=$MICROCKS_URL --waitFor=$WAIT_FOR --secretName="$SECRET_NAME" \
-      --keycloakClientId=$KEYCLOAK_CIENT_ID --keycloakClientSecret=$KEYCLOAK_CLIENT_SECRET \
+      --keycloakClientId=$KEYCLOAK_CLIENT_ID --keycloakClientSecret=$KEYCLOAK_CLIENT_SECRET \
       --insecure --filteredOperations="$FILTER_OPERATIONS" --operationsHeaders="$OPERATIONS_HEADERS" \ 
   `,
   ]);
