@@ -33,11 +33,11 @@ jobs:
 
         working-directory: example
         env:
-          SPECIFICATION_FILES: /app/samples/BeerCatalogAPI-collection.json
+          SPECIFICATION_FILES: /app/samples/APIPastry-openapi.yaml
           MICROCKS_URL: http://microcks:8080/api
           KEYCLOAK_CLIENT_ID: microcks-serviceaccount
           KEYCLOAK_CLIENT_SECRET: ab54d329-e435-41ae-a900-ec6b3fe15c54
-          API_NAME_AND_VERSION: "Beer Catalog API:0.99"
-          TEST_ENDPOINT: "http://microcks:8080/rest/Beer+Catalog+API/0.99/"
-          RUNNER: "POSTMAN"
+          API_NAME_AND_VERSION: "API Pastry - 2.0:2.0.0"
+          TEST_ENDPOINT: "http://localhost:8080/rest/API+Pastry+-+2.0/2.0.0"
+          RUNNER: "HTTP"
           WAIT_FOR: "3sec"
