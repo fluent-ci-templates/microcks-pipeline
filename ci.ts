@@ -1,7 +1,7 @@
 import {
   importApiSpecs,
   runTests,
-} from "https://pkg.fluentci.io/microcks_pipeline@v0.1.1/mod.ts";
+} from "https://pkg.fluentci.io/microcks_pipeline@v0.1.2/mod.ts";
 
 await importApiSpecs(
   ".",
