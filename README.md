@@ -32,7 +32,7 @@ fluentci run .
 Use as a [Dagger](https://dagger.io) module:
 
 ```bash
-dagger install github.com/fluent-ci-templates/microcks-pipeline@mod
+dagger install github.com/fluent-ci-templates/microcks-pipeline@main
 ```
 
 ## Environment variables
