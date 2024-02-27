@@ -35,6 +35,25 @@ Use as a [Dagger](https://dagger.io) module:
 dagger install github.com/fluent-ci-templates/microcks-pipeline@main
 ```
 
+Call a function from the module:
+
+```bash
+# Import API specifications into Microcks
+dagger call import-api-specs --src . \
+          --specification-files $SPECIFICATION_FILES \
+          --microcks-url $MICROCKS_URL \
+          --keycloak-client-id $KEYCLOAK_CLIENT_ID \
+          --keycloak-client-secret KEYCLOAK_CLIENT_SECRET
+
+# Run Microcks tests
+dagger call run-tests --api-name-and-version "$API_NAME_AND_VERSION" \
+--test-endpoint $TEST_ENDPOINT \
+--runner $RUNNER \
+--microcks-url $MICROCKS_URL \
+--keycloak-client-id $KEYCLOAK_CLIENT_ID \
+--keycloak-client-secret KEYCLOAK_CLIENT_SECRET
+```
+
 ## Environment variables
 
 | Variable          | Description               | Default    |
