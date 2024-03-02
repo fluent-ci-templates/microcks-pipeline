@@ -71,8 +71,7 @@ dagger call run-tests --api-name-and-version "$API_NAME_AND_VERSION" \
 | FILTERED_OPERATIONS | JSON that allows to filter a list of operations to launch a test for |  |
 
 
-
-## 📝 Jobs
+## ✨ Jobs
 
 | Job              | Description                               |
 | ---------------- | ----------------------------------------- |
