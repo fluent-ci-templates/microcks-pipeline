@@ -1,8 +1,8 @@
+import { dag } from "../../sdk/client.gen.ts";
 import { Directory, DirectoryID } from "../../deps.ts";
-import { Secret, Client, SecretID } from "../../sdk/client.gen.ts";
+import { Secret, SecretID } from "../../sdk/client.gen.ts";
 
 export const getDirectory = async (
-  client: Client,
   src: string | Directory | undefined = "."
 ) => {
   if (src instanceof Directory) {
@@ -10,37 +10,34 @@ export const getDirectory = async (
   }
   if (typeof src === "string") {
     try {
-      const directory = client.loadDirectoryFromID(src as DirectoryID);
+      const directory = dag.loadDirectoryFromID(src as DirectoryID);
       await directory.id();
       return directory;
     } catch (_) {
-      return client.host
-        ? client.host().directory(src)
-        : client.currentModule().source().directory(src);
+      return dag.host
+        ? dag.host().directory(src)
+        : dag.currentModule().source().directory(src);
     }
   }
-  return client.host
-    ? client.host().directory(src)
-    : client.currentModule().source().directory(src);
+  return dag.host
+    ? dag.host().directory(src)
+    : dag.currentModule().source().directory(src);
 };
 
-export const getKeycloakClientSecret = async (
-  client: Client,
-  kcSecret: string | Secret
-) => {
+export const getKeycloakClientSecret = async (kcSecret: string | Secret) => {
   if (Deno.env.get("KEYCLOAK_CLIENT_SECRET")) {
-    return client.setSecret(
+    return dag.setSecret(
       "KEYCLOAK_CLIENT_SECRET",
       Deno.env.get("KEYCLOAK_CLIENT_SECRET")!
     );
   }
   if (kcSecret && typeof kcSecret === "string") {
     try {
-      const secret = client.loadSecretFromID(kcSecret as SecretID);
+      const secret = dag.loadSecretFromID(kcSecret as SecretID);
       await secret.id();
       return secret;
     } catch (_) {
-      return client.setSecret("KEYCLOAK_CLIENT_SECRET", kcSecret);
+      return dag.setSecret("KEYCLOAK_CLIENT_SECRET", kcSecret);
     }
   }
   if (kcSecret && kcSecret instanceof Secret) {
@@ -49,19 +46,24 @@ export const getKeycloakClientSecret = async (
   throw new Error("KEYCLOAK_CLIENT_SECRET not found");
 };
 
-export const microcksService = (client: Client) => {
-  const mongo = client
+export const microcksService = () => {
+  const mongo = dag
     .container()
     .from("mongo:3.6.23")
-    .withMountedCache("/data/db", client.cacheVolume("microcks-mongo-data"))
+    .withMountedCache("/data/db", dag.cacheVolume("microcks-mongo-data"))
     .withExposedPort(27017)
     .asService();
 
-  const realm = client.host
-    ? client.host().file("microcks-realm-sample.json")
-    : client.currentModule().source().file("microcks-realm-sample.json");
+  const realm = dag
+    .container()
+    .from("alpine")
+    .withExec([
+      "wget",
+      "https://raw.githubusercontent.com/fluent-ci-templates/microcks-pipeline/main/example/microcks-realm-sample.json",
+    ])
+    .file("/microcks-realm-sample.json");
 
-  const keycloak = client
+  const keycloak = dag
     .container()
     .from("quay.io/keycloak/keycloak:22.0.2")
     .withFile("/opt/keycloak/data/import/microcks-realm.json", realm)
@@ -74,12 +76,12 @@ export const microcksService = (client: Client) => {
     .withExposedPort(8080)
     .asService();
 
-  const postman = client
+  const postman = dag
     .container()
     .from("quay.io/microcks/microcks-postman-runtime:latest")
     .asService();
 
-  const microcks = client
+  const microcks = dag
     .container()
     .from("quay.io/microcks/microcks:1.8.1")
     .withEnvVariable("SPRING_PROFILES_ACTIVE", "prod")

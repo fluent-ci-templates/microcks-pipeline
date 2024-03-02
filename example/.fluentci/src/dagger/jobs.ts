@@ -35,8 +35,8 @@ export async function importApiSpecs(
   keycloakClientId: string,
   keycloakClientSecret: string | Secret
 ): Promise<string> {
-  const secret = await getKeycloakClientSecret(dag, keycloakClientSecret);
-  const context = await getDirectory(dag, src);
+  const secret = await getKeycloakClientSecret(keycloakClientSecret);
+  const context = await getDirectory(src);
   let ctr = dag
     .pipeline(Job.importApiSpecs)
     .container()
@@ -49,7 +49,7 @@ export async function importApiSpecs(
     .withSecretVariable("KEYCLOAK_CLIENT_SECRET", secret);
 
   if (microcksURL === "http://microcks:8080/api") {
-    const { microcks, keycloak } = microcksService(dag);
+    const { microcks, keycloak } = microcksService();
     ctr = await ctr
       .withServiceBinding("microcks", microcks)
       .withServiceBinding("keycloak", keycloak)
@@ -99,7 +99,7 @@ export async function runTests(
   filteredOperations?: string,
   operationsHeaders?: string
 ): Promise<string> {
-  const secret = await getKeycloakClientSecret(dag, keycloakClientSecret);
+  const secret = await getKeycloakClientSecret(keycloakClientSecret);
   let ctr = dag
     .pipeline(Job.runTests)
     .container()
@@ -117,7 +117,7 @@ export async function runTests(
     .withEnvVariable("OPERATIONS_HEADERS", operationsHeaders || "");
 
   if (microcksURL === "http://microcks:8080/api") {
-    const { microcks, keycloak } = microcksService(dag);
+    const { microcks, keycloak } = microcksService();
     ctr = await ctr
       .withServiceBinding("microcks", microcks)
       .withServiceBinding("keycloak", keycloak)
