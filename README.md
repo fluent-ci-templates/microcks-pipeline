@@ -28,7 +28,7 @@ Now you can run the pipeline with:
 fluentci run .
 ```
 
-## Dagger Module
+## 🧩 Dagger Module
 
 Use as a [Dagger](https://dagger.io) module:
 
@@ -55,7 +55,7 @@ dagger call run-tests --api-name-and-version "$API_NAME_AND_VERSION" \
 --keycloak-client-secret KEYCLOAK_CLIENT_SECRET
 ```
 
-## Environment variables
+## 🛠️ Environment variables
 
 | Variable          | Description               | Default    |
 | ----------------- | ------------------------- | ---------- |
@@ -72,7 +72,7 @@ dagger call run-tests --api-name-and-version "$API_NAME_AND_VERSION" \
 
 
 
-## Jobs
+## 📝 Jobs
 
 | Job              | Description                               |
 | ---------------- | ----------------------------------------- |
@@ -102,7 +102,7 @@ runTests(
 ): Promise<string>;
 ```
 
-## Programmatic usage
+## 👨‍💻 Programmatic usage
 
 You can also use this pipeline programmatically:
 
