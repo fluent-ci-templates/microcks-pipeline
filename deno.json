@@ -1,4 +1,7 @@
 {
+  "name": "@fluentci/microcks",
+  "version": "0.1.3",
+  "exports": "./mod.ts",
   "importMap": "import_map.json",
   "tasks": {
     "esm:add": "deno run -A https://esm.sh/v128 add",
