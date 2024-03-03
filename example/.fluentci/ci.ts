@@ -2,23 +2,24 @@ import {
   importApiSpecs,
   runTests,
 } from "https://pkg.fluentci.io/microcks_pipeline@v0.1.0/mod.ts";
+import { env } from "./deps.ts";
 
 await importApiSpecs(
   ".",
-  Deno.env.get("SPECIFICATION_FILES")!,
-  Deno.env.get("MICROCKS_URL")!,
-  Deno.env.get("KEYCLOAK_CLIENT_ID")!,
-  Deno.env.get("KEYCLOAK_CLIENT_SECRET")!
+  env.get("SPECIFICATION_FILES")!,
+  env.get("MICROCKS_URL")!,
+  env.get("KEYCLOAK_CLIENT_ID")!,
+  env.get("KEYCLOAK_CLIENT_SECRET")!
 );
 
 await runTests(
-  Deno.env.get("API_NAME_AND_VERSION")!,
-  Deno.env.get("TEST_ENDPOINT")!,
-  Deno.env.get("MICROCKS_URL")!,
-  Deno.env.get("KEYCLOAK_CLIENT_ID")!,
-  Deno.env.get("KEYCLOAK_CLIENT_SECRET")!,
-  Deno.env.get("RUNNER")!,
-  Deno.env.get("WAIT_FOR"),
-  Deno.env.get("SECRET_NAME"),
-  Deno.env.get("FILTERED_OPERATIONS")
+  env.get("API_NAME_AND_VERSION")!,
+  env.get("TEST_ENDPOINT")!,
+  env.get("MICROCKS_URL")!,
+  env.get("KEYCLOAK_CLIENT_ID")!,
+  env.get("KEYCLOAK_CLIENT_SECRET")!,
+  env.get("RUNNER")!,
+  env.get("WAIT_FOR"),
+  env.get("SECRET_NAME"),
+  env.get("FILTERED_OPERATIONS")
 );

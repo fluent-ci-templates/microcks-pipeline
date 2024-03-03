@@ -1,4 +1,5 @@
 import * as jobs from "./jobs.ts";
+import { env } from "../../deps.ts";
 
 const { importApiSpecs, runTests, runnableJobs } = jobs;
 
@@ -11,9 +12,9 @@ export default async function pipeline(src = ".", args: string[] = []) {
   await importApiSpecs(
     src,
     "specifications",
-    Deno.env.get("MICROCKS_URL")!,
-    Deno.env.get("KEYCLOAK_CLIENT_ID")!,
-    Deno.env.get("KEYCLOAK_CLIENT_SECRET")!
+    env.get("MICROCKS_URL")!,
+    env.get("KEYCLOAK_CLIENT_ID")!,
+    env.get("KEYCLOAK_CLIENT_SECRET")!
   );
 }
 
@@ -27,23 +28,23 @@ async function runSpecificJobs(args: jobs.Job[]) {
       case jobs.Job.importApiSpecs:
         await importApiSpecs(
           ".",
-          Deno.env.get("SPECIFICATION_FILES")!,
-          Deno.env.get("MICROCKS_URL")!,
-          Deno.env.get("KEYCLOAK_CLIENT_ID")!,
-          Deno.env.get("KEYCLOAK_CLIENT_SECRET")!
+          env.get("SPECIFICATION_FILES")!,
+          env.get("MICROCKS_URL")!,
+          env.get("KEYCLOAK_CLIENT_ID")!,
+          env.get("KEYCLOAK_CLIENT_SECRET")!
         );
         break;
       case jobs.Job.runTests:
         await runTests(
-          Deno.env.get("API_NAME_AND_VERSION")!,
-          Deno.env.get("TEST_ENDPOINT")!,
-          Deno.env.get("MICROCKS_URL")!,
-          Deno.env.get("KEYCLOAK_CLIENT_ID")!,
-          Deno.env.get("KEYCLOAK_CLIENT_SECRET")!,
-          Deno.env.get("RUNNER")!,
-          Deno.env.get("WAIT_FOR"),
-          Deno.env.get("SECRET_NAME"),
-          Deno.env.get("FILTERED_OPERATIONS")
+          env.get("API_NAME_AND_VERSION")!,
+          env.get("TEST_ENDPOINT")!,
+          env.get("MICROCKS_URL")!,
+          env.get("KEYCLOAK_CLIENT_ID")!,
+          env.get("KEYCLOAK_CLIENT_SECRET")!,
+          env.get("RUNNER")!,
+          env.get("WAIT_FOR"),
+          env.get("SECRET_NAME"),
+          env.get("FILTERED_OPERATIONS")
         );
         break;
       default:

@@ -1,5 +1,4 @@
-import { dag } from "../../sdk/client.gen.ts";
-import { Directory, DirectoryID } from "../../deps.ts";
+import { dag, env, Directory, DirectoryID } from "../../deps.ts";
 import { Secret, SecretID } from "../../sdk/client.gen.ts";
 
 export const getDirectory = async (
@@ -25,10 +24,10 @@ export const getDirectory = async (
 };
 
 export const getKeycloakClientSecret = async (kcSecret: string | Secret) => {
-  if (Deno.env.get("KEYCLOAK_CLIENT_SECRET")) {
+  if (env.get("KEYCLOAK_CLIENT_SECRET")) {
     return dag.setSecret(
       "KEYCLOAK_CLIENT_SECRET",
-      Deno.env.get("KEYCLOAK_CLIENT_SECRET")!
+      env.get("KEYCLOAK_CLIENT_SECRET")!
     );
   }
   if (kcSecret && typeof kcSecret === "string") {
