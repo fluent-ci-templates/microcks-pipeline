@@ -19,6 +19,8 @@ export enum Job {
 export const exclude = [];
 
 /**
+ * Import API specifications into Microcks
+ *
  * @function
  * @description Import API specifications into Microcks
  * @param src {src: string | Directory | undefined}
@@ -73,6 +75,8 @@ export async function importApiSpecs(
 }
 
 /**
+ * Launch a Microcks test on an API endpoint
+ *
  * @function
  * @description Launch a Microcks test on an API endpoint
  * @param apiNameAndVersion {apiNameAndVersion: string}
