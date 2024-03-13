@@ -1,6 +1,6 @@
 {
   "name": "@fluentci/microcks",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "exports": "./mod.ts",
   "importMap": "import_map.json",
   "tasks": {

@@ -23,11 +23,11 @@ export const exclude = [];
  *
  * @function
  * @description Import API specifications into Microcks
- * @param src {src: string | Directory | undefined}
- * @param specificationFiles {specificationFiles: string}
- * @param microcksURL {microcksURL: string}
- * @param keycloakClientId {keycloakClientId: string}
- * @param keycloakClientSecret {keycloakClientSecret: string | Secret}
+ * @param {src: string | Directory | undefined} src The source directory
+ * @param {specificationFiles: string} specificationFiles The path to the API specifications
+ * @param {microcksURL: string} microcksURL Microcks instance API endpoint
+ * @param {keycloakClientId: string}  keycloakClientId Keycloak Realm Service Account ClientId
+ * @param  {keycloakClientSecret: string | Secret} keycloakClientSecret Keycloak Realm Service Account ClientSecret
  * @returns {string}
  */
 export async function importApiSpecs(
@@ -79,16 +79,16 @@ export async function importApiSpecs(
  *
  * @function
  * @description Launch a Microcks test on an API endpoint
- * @param apiNameAndVersion {apiNameAndVersion: string}
- * @param testEndpoint {testEndpoint: string}
- * @param runner {runner: string}
- * @param microcksURL {microcksURL: string}
- * @param waitFor {waitFor: string}
- * @param secretName {secretName: string}
- * @param keycloakClientId {keycloakClientId: string}
- * @param keycloakClientSecret {keycloakClientSecret: string | Secret}
- * @param filteredOperations {filteredOperations: string}
- * @param operationsHeaders {operationsHeaders: string}
+ * @param {apiNameAndVersion: string} apiNameAndVersion The name and version of the API to test
+ * @param {testEndpoint: string} testEndpoint The endpoint to test
+ * @param {runner: string} runner Test strategy (one of: HTTP, SOAP, SOAP_UI, POSTMAN, OPEN_API_SCHEMA, ASYNC_API_SCHEMA, GRPC_PROTOBUF, GRAPHQL_SCHEMA)
+ * @param {microcksURL: string} microcksURL Microcks instance API endpoint
+ * @param {waitFor: string} waitFor Time to wait for test to finish (int + one of: milli, sec, min)
+ * @param {secretName: string} secretName The name of a Secret to use for connecting test endpoint
+ * @param {keycloakClientId: string} keycloakClientId Keycloak Realm Service Account ClientId
+ * @param {keycloakClientSecret: string | Secret} keycloakClientSecret Keycloak Realm Service Account ClientSecret
+ * @param {filteredOperations: string} filteredOperations JSON that allows to filter a list of operations to launch a test for
+ * @param {operationsHeaders: string} operationsHeaders SON that override some operations headers for the tests to launch
  * @returns {string}
  */
 export async function runTests(
