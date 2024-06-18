@@ -1,8 +1,9 @@
 # Microcks Pipeline
 
-[![fluentci pipeline](https://img.shields.io/badge/dynamic/json?label=pkg.fluentci.io&labelColor=%23000&color=%23460cf1&url=https%3A%2F%2Fapi.fluentci.io%2Fv1%2Fpipeline%2Fmicrocks_pipeline&query=%24.version)](https://pkg.fluentci.io/microcks_pipeline)
+[![fluentci pipeline](https://shield.fluentci.io/x/microcks_pipeline)](https://pkg.fluentci.io/microcks_pipeline)
+[![deno module](https://shield.deno.dev/x/microcks_pipeline)](https://deno.land/x/microcks_pipeline)
 ![deno compatibility](https://shield.deno.dev/deno/^1.41)
-[![dagger-min-version](https://img.shields.io/badge/dagger-v0.10.0-blue?color=3D66FF&labelColor=000000)](https://dagger.io)
+[![dagger-min-version](https://shield.fluentci.io/dagger/v0.11.7)](https://dagger.io)
 [![](https://jsr.io/badges/@fluentci/microcks)](https://jsr.io/@fluentci/microcks)
 [![ci](https://github.com/fluent-ci-templates/microcks-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/fluent-ci-templates/microcks-pipeline/actions/workflows/ci.yml)
 
